@@ -36,23 +36,12 @@
         .logo {
             display: block;
         }
-
-        .content-wrapper .content {
-            text-align: center;
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
     <main>
         <div class="header">
             <a class="logo" href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of telegram web apps"></a>
-        </div>
-        <div class="content-wrapper">
-            <div class="content">
-                <div style="text-align: center;" id="customer-name"></div>
-                <div style="text-align: center;" id="customer-username"></div>
-            </div>
         </div>
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
@@ -72,21 +61,12 @@
         </ul>
 
         <h1>Buttons</h1>
+        <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
         <button onclick="toggleMainButton();">Toggle Main Button</button>
     </main>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         Telegram.WebApp.ready();
-        Telegram.expand();
-
-        let customerName =  document.getElementById('customer-name');
-        let customerUsername = document.getElementById('customer-username');
-
-        let customerNameText = Telegram.initDataUnsafe.user.first_name + ' ' + Telegram.initDataUnsafe.user.last_name;
-        let customerUsernameText = '[ ' + tg.initDataUnsafe.user.username + ' ]';
-
-        customerName.append(customerNameText);
-        customerUsername.append(customerUsernameText);
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
