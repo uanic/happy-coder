@@ -51,8 +51,8 @@
         <div class="content-wrapper">
             <div class="content">
                 <div style="text-align: center;"><h2>Hello,</h2></div>
-                <div style="text-align: center;" id="customer-name"></div>
-                <div style="text-align: center;" id="customer-username"></div>
+                <div style="text-align: center;"><h1 id="customer-name"></h1></div>
+                <div style="text-align: center;"><h2 id="customer-username"></h2></div>
             </div>
         </div>
         <h1>Modals</h1>
@@ -90,8 +90,8 @@
         let customerNameText = TelegramWebApp.initDataUnsafe.user.first_name + ' ' + TelegramWebApp.initDataUnsafe.user.last_name;
         let customerUsernameText = '[ ' + TelegramWebApp.initDataUnsafe.user.username + ' ]';
 
-        customerName.append('<h1>' + customerNameText + '<\h1>');
-        customerUsername.append('<h2>' + customerUsernameText + '<\h2>');
+        customerName.append(customerNameText);
+        customerUsername.append(customerUsernameText);
 
         TelegramWebApp.onEvent('themeChanged', function() {
             document.documentElement.className = TelegramWebApp.colorScheme;
