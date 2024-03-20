@@ -42,6 +42,10 @@
             padding: 10px;
         }
 
+        .footer {
+            margin: 10px 0;
+        }
+
         .footer .versions, .footer .copyright {
             text-align: center;
         }
@@ -55,7 +59,7 @@
     <div class="content-wrapper">
         <div class="content">
             <div style="text-align: center;"><h2>Hello,</h2></div>
-            <div style="text-align: center;"><h1 id="customer-name"></h1></div>
+            <div style="text-align: center;"><h2 id="customer-name"></h2></div>
             <div style="text-align: center;"><h2 id="customer-username"></h2></div>
         </div>
     </div>
@@ -81,7 +85,7 @@
 
     <div class="footer">
         <div class="versions">
-            Version: <span id="ver"></span>, platform: <span id="platform"></span>
+            Version: <span id="ver"></span>
         </div>
         <div class="copyright">
             &copy; 2024 Kaminskyi Serhii
@@ -144,7 +148,6 @@
     });
 
     document.getElementById('ver').innerHTML = TelegramWebApp.version;
-    document.getElementById('platform').innerHTML = TelegramWebApp.platform;
 </script>
 </body>
 </html>
