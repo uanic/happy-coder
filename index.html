@@ -55,19 +55,19 @@
             </div>
         </div>
         <h1>Modals</h1>
-        <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
+        <button onclick="TelegramWebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
 
         <h1>Links</h1>
         <ul>
             <li>
-                <a href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/trendingapps');">Open link within Telegram</a>
+                <a href="javascript:TelegramWebApp.openTelegramLink('https://t.me/trendingapps');">Open link within Telegram</a>
             </li>
             <li>
-                <a href="javascript:Telegram.WebApp.openLink('https://ton.org/');">Open link in external browser</a>
+                <a href="javascript:TelegramWebApp.openLink('https://ton.org/');">Open link in external browser</a>
             </li>
             <li>
-                <a href="javascript:Telegram.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
+                <a href="javascript:TelegramWebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
             </li>
         </ul>
 
@@ -76,32 +76,36 @@
     </main>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        Telegram.WebApp.ready();
-        Telegram.expand();
+        if (window.Telegram && window?.Telegram?.WebApp) {
+            window.Telegram.WebApp.ready();
+        }
+
+        let TelegramWebApp = window.TelegramWebApp;
+        TelegramWebApp.expand();
 
         let customerName =  document.getElementById('customer-name');
         let customerUsername = document.getElementById('customer-username');
 
-        let customerNameText = Telegram.initDataUnsafe.user.first_name + ' ' + Telegram.initDataUnsafe.user.last_name;
-        let customerUsernameText = '[ ' + Telegram.initDataUnsafe.user.username + ' ]';
+        let customerNameText = TelegramWebApp.initDataUnsafe.user.first_name + ' ' + TelegramWebApp.initDataUnsafe.user.last_name;
+        let customerUsernameText = '[ ' + TelegramWebApp.initDataUnsafe.user.username + ' ]';
 
         customerName.append(customerNameText);
         customerUsername.append(customerUsernameText);
 
-        Telegram.WebApp.onEvent('themeChanged', function() {
-            document.documentElement.className = Telegram.WebApp.colorScheme;
+        TelegramWebApp.onEvent('themeChanged', function() {
+            document.documentElement.className = TelegramWebApp.colorScheme;
         });
 
-        Telegram.WebApp.MainButton.setParams({
+        TelegramWebApp.MainButton.setParams({
             text: 'Main Button'
         });
-        Telegram.WebApp.MainButton.onClick(function () {
-            Telegram.WebApp.showAlert('Main Button was clicked')
+        TelegramWebApp.MainButton.onClick(function () {
+            TelegramWebApp.showAlert('Main Button was clicked')
         });	
-        Telegram.WebApp.MainButton.show();
+        TelegramWebApp.MainButton.show();
 
         function showPopup() {
-            Telegram.WebApp.showPopup({
+            TelegramWebApp.showPopup({
                 title: 'Title',
                 message: 'Some message',
                 buttons: [
@@ -110,22 +114,22 @@
                 ]
             }, function(btn) {
                 if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://ton.org/');
+                    TelegramWebApp.openLink('https://ton.org/');
                 }
             });
         }
 
         function toggleMainButton() {
-            if (Telegram.WebApp.MainButton.isVisible) {
-                Telegram.WebApp.MainButton.hide();
+            if (TelegramWebApp.MainButton.isVisible) {
+                TelegramWebApp.MainButton.hide();
             } else {
-                Telegram.WebApp.MainButton.show();
+                TelegramWebApp.MainButton.show();
             }
         }
 
-        Telegram.WebApp.setHeaderColor('secondary_bg_color');
-        Telegram.WebApp.onEvent('themeChanged', function() {
-            document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+        TelegramWebApp.setHeaderColor('secondary_bg_color');
+        TelegramWebApp.onEvent('themeChanged', function() {
+            document.body.setAttribute('style', '--bg-color:' + TelegramWebApp.backgroundColor);
         });
 
     </script>
