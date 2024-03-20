@@ -83,7 +83,7 @@
         let customerUsername = document.getElementById('customer-username');
 
         let customerNameText = Telegram.initDataUnsafe.user.first_name + ' ' + Telegram.initDataUnsafe.user.last_name;
-        let customerUsernameText = '[ ' + tg.initDataUnsafe.user.username + ' ]';
+        let customerUsernameText = '[ ' + Telegram.initDataUnsafe.user.username + ' ]';
 
         customerName.append(customerNameText);
         customerUsername.append(customerUsernameText);
