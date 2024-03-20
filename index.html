@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Telegram Mini Apps Vanilla JS Sample App</title>
     <style>
         body {
@@ -41,98 +41,110 @@
             text-align: center;
             padding: 10px;
         }
+
+        .footer .versions, .footer .copyright {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <main>
-        <div class="header">
-            <a class="logo" href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of telegram web apps"></a>
+<main>
+    <div class="header">
+        <a class="logo" href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of telegram web apps"></a>
+    </div>
+    <div class="content-wrapper">
+        <div class="content">
+            <div style="text-align: center;"><h2>Hello,</h2></div>
+            <div style="text-align: center;"><h1 id="customer-name"></h1></div>
+            <div style="text-align: center;"><h2 id="customer-username"></h2></div>
         </div>
-        <div class="content-wrapper">
-            <div class="content">
-                <div style="text-align: center;"><h2>Hello,</h2></div>
-                <div style="text-align: center;"><h1 id="customer-name"></h1></div>
-                <div style="text-align: center;"><h2 id="customer-username"></h2></div>
-            </div>
+    </div>
+    <h1>Modals</h1>
+    <button onclick="TelegramWebApp.showAlert('Hello World!');">Launch Alert</button>
+    <button onclick="showPopup();">Launch Popup</button>
+
+    <h1>Links</h1>
+    <ul>
+        <li>
+            <a href="javascript:TelegramWebApp.openTelegramLink('https://t.me/trendingapps');">Open link within Telegram</a>
+        </li>
+        <li>
+            <a href="javascript:TelegramWebApp.openLink('https://ton.org/');">Open link in external browser</a>
+        </li>
+        <li>
+            <a href="javascript:TelegramWebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
+        </li>
+    </ul>
+
+    <h1>Buttons</h1>
+    <button onclick="toggleMainButton();">Toggle Main Button</button>
+
+    <div class="footer">
+        <div class="versions">
+            Version: <span id="ver"></span>, platform: <span id="platform"></span>
         </div>
-        <h1>Modals</h1>
-        <button onclick="TelegramWebApp.showAlert('Hello World!');">Launch Alert</button>
-        <button onclick="showPopup();">Launch Popup</button>
+        <div class="copyright">
+            &copy; 2024 Kaminskyi Serhii
+        </div>
+    </div>
+</main>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    if (window.Telegram && window?.Telegram?.WebApp) {
+        window.Telegram.WebApp.ready();
+    }
 
-        <h1>Links</h1>
-        <ul>
-            <li>
-                <a href="javascript:TelegramWebApp.openTelegramLink('https://t.me/trendingapps');">Open link within Telegram</a>
-            </li>
-            <li>
-                <a href="javascript:TelegramWebApp.openLink('https://ton.org/');">Open link in external browser</a>
-            </li>
-            <li>
-                <a href="javascript:TelegramWebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
-            </li>
-        </ul>
+    let TelegramWebApp = window.Telegram.WebApp;
+    TelegramWebApp.expand();
 
-        <h1>Buttons</h1>
-        <button onclick="toggleMainButton();">Toggle Main Button</button>
-    </main>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        if (window.Telegram && window?.Telegram?.WebApp) {
-            window.Telegram.WebApp.ready();
-        }
+    let customerNameText = TelegramWebApp.initDataUnsafe.user.first_name + ' ' + TelegramWebApp.initDataUnsafe.user.last_name;
+    let customerUsernameText = '[ ' + TelegramWebApp.initDataUnsafe.user.username + ' ]';
 
-        let TelegramWebApp = window.Telegram.WebApp;
-        TelegramWebApp.expand();
+    document.getElementById('customer-name').innerHTML = customerNameText;
+    document.getElementById('customer-username').innerHTML = customerUsernameText;
 
-        let customerName =  document.getElementById('customer-name');
-        let customerUsername = document.getElementById('customer-username');
+    TelegramWebApp.onEvent('themeChanged', function () {
+        document.documentElement.className = TelegramWebApp.colorScheme;
+    });
 
-        let customerNameText = TelegramWebApp.initDataUnsafe.user.first_name + ' ' + TelegramWebApp.initDataUnsafe.user.last_name;
-        let customerUsernameText = '[ ' + TelegramWebApp.initDataUnsafe.user.username + ' ]';
+    TelegramWebApp.MainButton.setParams({
+        text: 'Main Button'
+    });
+    TelegramWebApp.MainButton.onClick(function () {
+        TelegramWebApp.showAlert('Main Button was clicked')
+    });
+    TelegramWebApp.MainButton.show();
 
-        customerName.append(customerNameText);
-        customerUsername.append(customerUsernameText);
-
-        TelegramWebApp.onEvent('themeChanged', function() {
-            document.documentElement.className = TelegramWebApp.colorScheme;
-        });
-
-        TelegramWebApp.MainButton.setParams({
-            text: 'Main Button'
-        });
-        TelegramWebApp.MainButton.onClick(function () {
-            TelegramWebApp.showAlert('Main Button was clicked')
-        });	
-        TelegramWebApp.MainButton.show();
-
-        function showPopup() {
-            TelegramWebApp.showPopup({
-                title: 'Title',
-                message: 'Some message',
-                buttons: [
-                    {id: 'link', type: 'default', text: 'Open ton.org'},
-                    {type: 'cancel'},
-                ]
-            }, function(btn) {
-                if (btn === 'link') {
-                    TelegramWebApp.openLink('https://ton.org/');
-                }
-            });
-        }
-
-        function toggleMainButton() {
-            if (TelegramWebApp.MainButton.isVisible) {
-                TelegramWebApp.MainButton.hide();
-            } else {
-                TelegramWebApp.MainButton.show();
+    function showPopup() {
+        TelegramWebApp.showPopup({
+            title: 'Title',
+            message: 'Some message',
+            buttons: [
+                {id: 'link', type: 'default', text: 'Open ton.org'},
+                {type: 'cancel'},
+            ]
+        }, function (btn) {
+            if (btn === 'link') {
+                TelegramWebApp.openLink('https://ton.org/');
             }
-        }
-
-        TelegramWebApp.setHeaderColor('secondary_bg_color');
-        TelegramWebApp.onEvent('themeChanged', function() {
-            document.body.setAttribute('style', '--bg-color:' + TelegramWebApp.backgroundColor);
         });
+    }
 
-    </script>
+    function toggleMainButton() {
+        if (TelegramWebApp.MainButton.isVisible) {
+            TelegramWebApp.MainButton.hide();
+        } else {
+            TelegramWebApp.MainButton.show();
+        }
+    }
+
+    TelegramWebApp.setHeaderColor('secondary_bg_color');
+    TelegramWebApp.onEvent('themeChanged', function () {
+        document.body.setAttribute('style', '--bg-color:' + TelegramWebApp.backgroundColor);
+    });
+
+    document.getElementById('ver').innerHTML = TelegramWebApp.version;
+    document.getElementById('platform').innerHTML = TelegramWebApp.platform;
+</script>
 </body>
 </html>
