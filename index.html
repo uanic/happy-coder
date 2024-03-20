@@ -82,7 +82,7 @@
 
     <h1>Buttons</h1>
     <button onclick="toggleMainButton();">Toggle Main Button</button>
-
+    <button onclick="toggleBackButton();">Toggle Back Button</button>
     <div class="footer">
         <div class="versions">
             Version: <span id="ver"></span>
@@ -111,13 +111,20 @@
         document.documentElement.className = TelegramWebApp.colorScheme;
     });
 
+    TelegramWebApp.isClosingConfirmationEnabled = true;
     TelegramWebApp.MainButton.setParams({
         text: 'Let\'s go!'
     });
     TelegramWebApp.MainButton.onClick(function () {
+        TelegramWebApp.MainButton.showProgress(false);
         TelegramWebApp.showAlert('You are Superman!!!')
     });
     TelegramWebApp.MainButton.show();
+    TelegramWebApp.BackButton.onClick(function () {
+      TelegramWebApp.MainButton.hideProgress();
+      TelegramWebApp.showAlert('You are not Superman!!!')
+    });
+    TelegramWebApp.BackButton.show();
 
     function showPopup() {
         TelegramWebApp.showPopup({
@@ -140,6 +147,14 @@
         } else {
             TelegramWebApp.MainButton.show();
         }
+    }
+
+    function toggleBackButton() {
+      if (TelegramWebApp.BackButton.isVisible) {
+        TelegramWebApp.BackButton.hide();
+      } else {
+        TelegramWebApp.BackButton.show();
+      }
     }
 
     TelegramWebApp.setHeaderColor('secondary_bg_color');
